@@ -1,12 +1,13 @@
 spring:
   application:
-    name: spring-webfux
+    name: spring-webflux
   r2dbc:
-    url: r2dbc:postgresql://localhost:5432/mydb
+    url: r2dbc:postgresql://localhost:5433/mdb
     username: postgres
     password: postgres
   liquibase:
-    change-log: classpath:db/changelog/db.changelog-master.yaml
+    changeLog: classpath:db/changelog-master.yaml
+
 
 logging:
   level:
