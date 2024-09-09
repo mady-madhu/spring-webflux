@@ -18,9 +18,15 @@ public class EmployeeController {
         this.service = service;
     }
 
-    @PostMapping
+    @PostMapping("/createEmployee")
     public Mono<Employee> createEmployee(@RequestBody Employee employee) {
-        return service.saveEmployee( employee);
+        return service.saveEmployee(employee);
+    }
+
+
+    @GetMapping(value = "/getEmployee", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Mono<Employee> getEmployee(@RequestParam Integer id) {
+        return service.findById(id);
     }
 
 
@@ -29,6 +35,10 @@ public class EmployeeController {
         return service.findAll().delayElements(Duration.ofSeconds(3));
     }
 
+    @PutMapping(value = "/updateEmployee",produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Mono<Employee> updateEmployee(@RequestParam Integer id,@RequestBody Employee e) {
+        return service.updateEmployee(id, e);
+    }
 
 
 }

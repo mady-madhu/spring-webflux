@@ -12,21 +12,27 @@ import reactor.core.publisher.Mono;
 public class EmployeeService {
     private final EmployeeRepository repository;
 
-    private final R2dbcEntityTemplate template;
 
-    public EmployeeService(R2dbcEntityTemplate template,EmployeeRepository repository) {
-        this.template = template;
+    public EmployeeService(EmployeeRepository repository) {
         this.repository = repository;
     }
 
 
-
     public Mono<Employee> saveEmployee(Employee employee) {
-       return template.insert(employee);
+        return repository.saveEmployee(employee);
     }
 
     public Flux<Employee> findAll() {
-        return template.select(Employee.class).all();
+        return repository.findAll();
+    }
+
+    public Mono<Employee> findById(Integer id) {
+        return repository.findById(id);
+    }
+
+
+    public Mono<Employee> updateEmployee(Integer id, Employee e) {
+        return repository.updateEmployee(id, e);
     }
 }
 
