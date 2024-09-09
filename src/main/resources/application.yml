@@ -5,11 +5,9 @@ spring:
     url: r2dbc:postgresql://localhost:5433/mdb
     username: postgres
     password: postgres
-  liquibase:
-    changeLog: classpath:db/changelog-master.yaml
 
 
 logging:
   level:
+    org.springframework.web: DEBUG
     org.springframework.r2dbc: DEBUG
-

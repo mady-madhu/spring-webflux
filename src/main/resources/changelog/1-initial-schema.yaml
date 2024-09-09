@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 2
+      id: 1
       author: postgres
       changes:
         - createTable:
@@ -8,7 +8,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
-                  type: bigserial
+                  type: bigint
                   autoIncrement: true
                   constraints:
                     primaryKey: true

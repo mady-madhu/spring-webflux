@@ -1,0 +1,3 @@
+databaseChangeLog:
+  - include:
+      file: C:\Users\Lenovo\repo\spring-webfux\src\main\resources\changelog\1-initial-schema.yaml
