@@ -13,9 +13,10 @@ public interface EmployeeRepository {
 
     Mono<Employee> saveEmployee(Employee e);
 
-    Mono<Employee> findById(Integer id);
+    Mono<Employee> findById(String id);
 
-    Mono<Employee> updateEmployee(Integer id, Employee e);
+
+    Mono<Employee> updateEmployee(String id, Employee e);
 
     Flux<Employee> findAll();
 }

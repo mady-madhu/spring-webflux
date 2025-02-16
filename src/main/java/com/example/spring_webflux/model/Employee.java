@@ -3,6 +3,7 @@ package com.example.spring_webflux.model;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,6 +17,7 @@ public class Employee {
     private String id; // MongoDB uses String _id by default
 
     private String name;
+    private String email;
     private String role;
 
 }

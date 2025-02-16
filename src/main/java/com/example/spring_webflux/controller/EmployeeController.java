@@ -25,7 +25,7 @@ public class EmployeeController {
 
 
     @GetMapping(value = "/getEmployee", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Mono<Employee> getEmployee(@RequestParam Integer id) {
+    public Mono<Employee> getEmployee(@RequestParam String id) {
         return service.findById(id);
     }
 
@@ -36,7 +36,7 @@ public class EmployeeController {
     }
 
     @PutMapping(value = "/updateEmployee",produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Mono<Employee> updateEmployee(@RequestParam Integer id,@RequestBody Employee e) {
+    public Mono<Employee> updateEmployee(@RequestParam String id,@RequestBody Employee e) {
         return service.updateEmployee(id, e);
     }
 

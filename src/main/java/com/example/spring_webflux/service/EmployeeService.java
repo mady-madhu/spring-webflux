@@ -24,12 +24,12 @@ public class EmployeeService {
         return repository.findAll();
     }
 
-    public Mono<Employee> findById(Integer id) {
+    public Mono<Employee> findById(String id) {
         return repository.findById(id);
     }
 
 
-    public Mono<Employee> updateEmployee(Integer id, Employee e) {
+    public Mono<Employee> updateEmployee(String id, Employee e) {
         return repository.updateEmployee(id, e);
     }
 }

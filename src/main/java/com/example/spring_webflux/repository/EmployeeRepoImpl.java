@@ -1,6 +1,7 @@
 package com.example.spring_webflux.repository;
 
 import com.example.spring_webflux.model.Employee;
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -23,16 +24,17 @@ public class EmployeeRepoImpl implements EmployeeRepository {
     }
 
     @Override
-    public Mono<Employee> findById(Integer id) {
-        Query query = new Query(Criteria.where("id").is(id));
+    public Mono<Employee> findById(String id) {
+        Query query = new Query(Criteria.where("_id").is(id));
         return mongoTemplate.findOne(query, Employee.class);
     }
 
     @Override
-    public Mono<Employee> updateEmployee(Integer id, Employee newEmployee) {
+    public Mono<Employee> updateEmployee(String id, Employee newEmployee) {
         return findById(id)
                 .flatMap(existingEmployee -> {
                     existingEmployee.setName(newEmployee.getName());
+                    existingEmployee.setEmail(newEmployee.getEmail());
                     existingEmployee.setRole(newEmployee.getRole());
                     return mongoTemplate.save(existingEmployee);
                 })
