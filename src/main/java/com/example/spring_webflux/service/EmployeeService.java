@@ -1,6 +1,8 @@
 package com.example.spring_webflux.service;
 
 import com.example.spring_webflux.model.Employee;
+import com.example.spring_webflux.model.EmployeePageRequest;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import com.example.spring_webflux.repository.EmployeeRepository;
 import reactor.core.publisher.Flux;
@@ -32,7 +34,13 @@ public class EmployeeService {
     public Mono<Employee> updateEmployee(String id, Employee e) {
         return repository.updateEmployee(id, e);
     }
+
+
+    public Mono<Page<Employee>> getPaginatedEmployees(EmployeePageRequest pageRequest) {
+        return repository.findAll(pageRequest);
+    }
 }
+
 
 
 

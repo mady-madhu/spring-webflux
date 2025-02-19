@@ -1,7 +1,9 @@
 package com.example.spring_webflux.controller;
 
 import com.example.spring_webflux.model.Employee;
+import com.example.spring_webflux.model.EmployeePageRequest;
 import com.example.spring_webflux.service.EmployeeService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -32,6 +34,7 @@ public class EmployeeController {
 
     @GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<Employee> getAllEmployees() {
+        //service.findAll().toStream().collect(C)
         return service.findAll().delayElements(Duration.ofSeconds(3));
     }
 
@@ -39,6 +42,13 @@ public class EmployeeController {
     public Mono<Employee> updateEmployee(@RequestParam String id,@RequestBody Employee e) {
         return service.updateEmployee(id, e);
     }
+
+
+    @PostMapping("/paginated")
+    public Mono<Page<Employee>> paginated(@RequestBody EmployeePageRequest employee) {
+        return service.getPaginatedEmployees(employee);
+    }
+
 
 
 }

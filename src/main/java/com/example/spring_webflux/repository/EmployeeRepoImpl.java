@@ -1,7 +1,8 @@
 package com.example.spring_webflux.repository;
 
 import com.example.spring_webflux.model.Employee;
-import org.bson.types.ObjectId;
+import com.example.spring_webflux.model.EmployeePageRequest;
+import org.springframework.data.domain.*;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -44,5 +45,27 @@ public class EmployeeRepoImpl implements EmployeeRepository {
     @Override
     public Flux<Employee> findAll() {
         return mongoTemplate.findAll(Employee.class);
+    }
+
+
+    @Override
+    public Mono<Page<Employee>> findAll(EmployeePageRequest pageRequest) {
+        Query query = new Query()
+                .with(Sort.by(Sort.Order.by(pageRequest.getSortField()).with(Sort.Direction.fromString(pageRequest.getSortDirection()))))
+                .skip(pageRequest.getPage() * pageRequest.getSize())  // Pagination offset
+                .limit(pageRequest.getSize());  // Pagination limit
+
+        // Execute the query to fetch the employees in the given page and sorted order
+        Flux<Employee> employeesFlux = mongoTemplate.find(query, Employee.class);
+
+        // Count the total number of employees for pagination metadata
+        Mono<Long> countMono = mongoTemplate.count(new Query(), Employee.class);
+
+        // Combine the results into a Page
+        return countMono.zipWith(employeesFlux.collectList())
+                .map(tuple -> {
+                    long totalElements = tuple.getT1();
+                    return new PageImpl<>(tuple.getT2(), PageRequest.of(pageRequest.getPage(), pageRequest.getSize()), totalElements);
+                });
     }
 }

@@ -1,6 +1,9 @@
 package com.example.spring_webflux.repository;
 
 import com.example.spring_webflux.model.Employee;
+import com.example.spring_webflux.model.EmployeePageRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
@@ -19,4 +22,6 @@ public interface EmployeeRepository {
     Mono<Employee> updateEmployee(String id, Employee e);
 
     Flux<Employee> findAll();
+
+    Mono<Page<Employee>> findAll(EmployeePageRequest pageRequest);
 }
