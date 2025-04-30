@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 //in my case this extends ReactiveCrudRepository<Employee, Integer> is not working i need to investigate
 
 @Repository
@@ -18,10 +20,10 @@ public interface EmployeeRepository {
 
     Mono<Employee> findById(String id);
 
-
     Mono<Employee> updateEmployee(String id, Employee e);
 
     Flux<Employee> findAll();
+    Mono<List<Employee>> findAllAsMono();;
 
     Mono<Page<Employee>> findAll(EmployeePageRequest pageRequest);
 }

@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 @Component
 public class EmployeeRepoImpl implements EmployeeRepository {
 
@@ -45,6 +47,11 @@ public class EmployeeRepoImpl implements EmployeeRepository {
     @Override
     public Flux<Employee> findAll() {
         return mongoTemplate.findAll(Employee.class);
+    }
+
+    @Override
+    public Mono<List<Employee>> findAllAsMono() {
+        return mongoTemplate.findAll(Employee.class).collectList();
     }
 
 

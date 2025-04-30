@@ -10,9 +10,10 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
+import java.util.List;
 
 @RestController
-@RequestMapping("/flux/employees")
+@RequestMapping("/flux")
 public class EmployeeController {
     private final EmployeeService service;
 
@@ -32,10 +33,16 @@ public class EmployeeController {
     }
 
 
-    @GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @GetMapping(value = "/getEmployees",produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<Employee> getAllEmployees() {
         //service.findAll().toStream().collect(C)
         return service.findAll().delayElements(Duration.ofSeconds(3));
+    }
+
+    @GetMapping(value = "/getEmployeesAsMono")
+    public Mono<List<Employee>> getAllEmployeesAsMono() {
+        //service.findAll().toStream().collect(C)
+        return service.findAllAsMono();
     }
 
     @PutMapping(value = "/updateEmployee",produces = MediaType.TEXT_EVENT_STREAM_VALUE)
